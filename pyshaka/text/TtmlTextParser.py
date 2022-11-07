@@ -491,8 +491,8 @@ class TtmlTextParser:
             percentage = percentValues_.findall(extent)
             results = percentage or pixelValues_.findall(extent)
             if results is not None:
-                region.width = int(results[0][0])
-                region.height = int(results[0][1])
+                region.width = int(float(results[0][0]))
+                region.height = int(float(results[0][1]))
 
                 if not percentage:
                     if globalWidth is not None:
@@ -512,8 +512,8 @@ class TtmlTextParser:
             percentage = percentValues_.findall(origin)
             results = percentage or pixelValues_.findall(origin)
             if len(results) > 0:
-                region.viewportAnchorX = int(results[0][0])
-                region.viewportAnchorY = int(results[0][1])
+                region.viewportAnchorX = int(float(results[0][0]))
+                region.viewportAnchorY = int(float(results[0][1]))
             if len(percentage) == 0:
                 if globalHeight is not None:
                     region.viewportAnchorY = region.viewportAnchorY * 100 / globalHeight
