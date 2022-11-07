@@ -386,7 +386,7 @@ class TtmlTextParser:
 
         fontWeight = TtmlTextParser.getStyleAttribute_(cueElement, region, styles, 'fontWeight', shouldInheritRegionStyles)
         if fontWeight and fontWeight == 'bold':
-            cue.fontWeight = fontWeight.BOLD
+            cue.fontWeight = fontWeight
 
         wrapOption = TtmlTextParser.getStyleAttribute_(cueElement, region, styles, 'wrapOption', shouldInheritRegionStyles)
         if wrapOption and wrapOption == 'noWrap':
