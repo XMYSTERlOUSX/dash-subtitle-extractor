@@ -86,34 +86,40 @@ class VttTextParser:
         names = []
         nameStart = -1
         newPayload = ''
+
         for i in range(len(payload)):
-            if payload[i] == '/':
-                try:
-                    end = payload.index('>', i)
-                except ValueError:
-                    end = -1
-                if end <= i:
-                    return payload
-                tagEnd = payload[i + 1:end]
-                tagStart = names.pop(-1)
-                if not tagEnd or not tagStart:
-                    return payload
-                elif tagStart == tagEnd:
-                    newPayload += '/' + tagEnd + '>'
-                    i += len(tagEnd) + 1
-                else:
-                    if not tagStart.startsWith('c.') or tagEnd != 'c':
+            try:
+                if payload[i] == '/':
+                    try:
+                        end = payload.index('>', i)
+                    except ValueError:
+                        end = -1
+                    if end <= i:
                         return payload
-                    newPayload += '/' + tagStart + '>'
-                    i += len(tagEnd) + 1
-            else:
-                if payload[i] == '<':
-                    nameStart = i + 1
-                elif payload[i] == '>':
-                    if nameStart > 0:
-                        names.append(payload[nameStart:i])
-                        nameStart = -1
+                    tagEnd = payload[i + 1:end]
+                    tagStart = names.pop(-1)
+                    if not tagEnd or not tagStart:
+                        return payload
+                    elif tagStart == tagEnd:
+                        newPayload += '/' + tagEnd + '>'
+                        i += len(tagEnd) + 1
+                    else:
+                        if not tagStart.startsWith('c.') or tagEnd != 'c':
+                            return payload
+                        newPayload += '/' + tagStart + '>'
+                        i += len(tagEnd) + 1
+                else:
+                    if payload[i] == '<':
+                        nameStart = i + 1
+                    elif payload[i] == '>':
+                        if nameStart > 0:
+                            names.append(payload[nameStart:i])
+                            nameStart = -1
+                    newPayload += payload[i]
+            except:
                 newPayload += payload[i]
+                continue
+
         return newPayload
 
     @staticmethod
